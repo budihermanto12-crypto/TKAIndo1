@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Try Out TKA 2026 - Bahasa Indonesia Paket 1</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            user-select: none; /* Mencegah copy paste */
+            -webkit-user-select: none;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .text-size-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-size-base { font-size: 1rem; line-height: 1.5rem; }
+        .text-size-lg { font-size: 1.125rem; line-height: 1.75rem; }
+        .text-size-xl { font-size: 1.25rem; line-height: 1.875rem; }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-certificate, #printable-certificate * {
+                visibility: visible;
+            }
+            #printable-certificate {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+
+    <header id="main-header" class="bg-indigo-700 text-white shadow-md sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white text-indigo-700 p-2 rounded-lg font-bold text-xl shadow-sm">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">CBT TKA 2026 - Bahasa Indonesia</h1>
+                    <p class="text-xs text-indigo-200">Latihan Kemampuan Akademik SD/MI - Paket 1</p>
+                </div>
+            </div>
+
+            <!-- Header Controls (Visible during quiz) -->
+            <div id="quiz-controls" class="hidden flex items-center space-x-4">
+                <!-- Font Resize Control -->
+                <div class="bg-indigo-800 rounded-lg p-1 flex items-center space-x-1 border border-indigo-600">
+                    <button id="btn-zoom-out" title="Kecilkan Teks" class="w-8 h-8 rounded text-indigo-200 hover:bg-indigo-600 flex items-center justify-center font-bold text-sm">A-</button>
+                    <button id="btn-zoom-reset" title="Ukuran Normal" class="px-2 h-8 rounded text-indigo-200 hover:bg-indigo-600 flex items-center justify-center text-xs">Normal</button>
+                    <button id="btn-zoom-in" title="Besarkan Teks" class="w-8 h-8 rounded text-indigo-200 hover:bg-indigo-600 flex items-center justify-center font-bold text-base">A+</button>
+                </div>
+
+                <!-- Timer & Cheating Indicator -->
+                <div id="cheat-badge" class="bg-emerald-500/20 border border-emerald-400 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Status: Aman</span>
+                </div>
+
+                <button id="btn-toggle-sidebar" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center space-x-2 border border-indigo-500 transition">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span class="hidden sm:inline">Navigasi Soal</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="cheat-warning-overlay" class="fixed inset-0 bg-red-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 text-center shadow-2xl border-2 border-red-500">
+            <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl animate-bounce">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800 mb-2">Peringatan Keamanan!</h3>
+            <p class="text-slate-600 text-sm mb-4">
+                Anda terdeteksi meninggalkan halaman/tab aplikasi ujian! Ujian akan di-reset otomatis jika tidak kembali dalam:
+            </p>
+            <div class="text-4xl font-extrabold text-red-600 my-4" id="cheat-timer-count">10</div>
+            <p class="text-xs text-slate-500">Kembalilah fokus ke jendela ujian ini segera.</p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 flex flex-col justify-center">
+
+        <section id="identity-section" class="max-w-xl mx-auto w-full bg-white p-8 rounded-2xl shadow-xl border border-slate-200">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl font-bold shadow-inner">
+                    <i class="fa-solid fa-user-pen"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800">Identitas Peserta</h2>
+                <p class="text-slate-500 text-sm mt-1">Silakan isi data diri Anda sebelum memulai Try Out Bahasa Indonesia Paket 1</p>
+            </div>
+
+            <form id="form-identity" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nama Lengkap Siswa</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                            <i class="fa-solid fa-id-card"></i>
+                        </span>
+                        <input type="text" id="input-student-name" required placeholder="Contoh: Ananda Rizky" class="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nomor Absen / NISN</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                            <i class="fa-solid fa-hashtag"></i>
+                        </span>
+                        <input type="text" id="input-student-id" required placeholder="Contoh: 05" class="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition text-sm">
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800 space-y-1">
+                    <div class="font-bold flex items-center text-amber-900 mb-1">
+                        <i class="fa-solid fa-shield-halved mr-1.5"></i> Peraturan Penting Ujian CBT:
+                    </div>
+                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                        <li>Dilarang berpindah tab atau membuka aplikasi lain.</li>
+                        <li>Sistem mendeteksi kecurangan. Lebih dari 10 detik berpindah tab, **soal akan ter-reset**.</li>
+                        <li>Target nilai minimal kelulusan adalah **80**.</li>
+                        <li>Acak soal dan pilihan jawaban berlaku aktif.</li>
+                    </ul>
+                </div>
+
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-indigo-200 transition duration-200 flex items-center justify-center space-x-2 text-sm">
+                    <span>Mulai Pengerjaan Ujian</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </section>
+
+        <section id="quiz-section" class="hidden flex-grow flex flex-col lg:flex-row gap-6 relative">
+            
+            <!-- Left/Top: Question Text & Stimulus Area -->
+            <div id="quiz-container" class="flex-grow flex flex-col bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                
+                <!-- Quiz Progress Bar Header -->
+                <div class="bg-slate-50 border-b border-slate-200 px-6 py-3 flex justify-between items-center text-sm">
+                    <div class="flex items-center space-x-2">
+                        <span class="bg-indigo-100 text-indigo-700 font-bold px-2.5 py-1 rounded-lg text-xs" id="question-badge">
+                            Soal No. 1
+                        </span>
+                        <span class="text-xs text-slate-500 font-medium" id="question-type-badge">
+                            Pilihan Ganda
+                        </span>
+                    </div>
+                    <div class="text-xs text-slate-500 font-medium">
+                        Diselesaikan: <span id="answered-count" class="font-bold text-indigo-600">0</span> / <span id="total-questions-count">30</span>
+                    </div>
+                </div>
+
+                <!-- Split View Body: Left = Reading Passage, Right = Questions -->
+                <div class="flex-grow p-6 overflow-y-auto space-y-6" id="question-content-box">
+                    
+                    <!-- Reading Text Stimulus Box (Shown if required for question) -->
+                    <div id="reading-stimulus-box" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-5 text-slate-700 space-y-2">
+                        <div class="text-xs font-bold uppercase tracking-wider text-indigo-600 flex items-center space-x-1 mb-2">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Teks Bacaan Terkait</span>
+                        </div>
+                        <div id="reading-stimulus-content" class="leading-relaxed text-slate-800 text-size-base">
+                            <!-- Stimulus Text HTML injected here -->
+                        </div>
+                    </div>
+
+                    <!-- Question Prompt Text -->
+                    <div class="space-y-4">
+                        <h3 id="question-text" class="font-bold text-slate-900 leading-snug text-size-lg">
+                            <!-- Question text goes here -->
+                        </h3>
+
+                        <!-- Image Attachment placeholder if any -->
+                        <div id="question-image-container" class="hidden my-4 max-w-lg mx-auto">
+                            <!-- Image dynamically rendered if present -->
+                        </div>
+
+                        <!-- Answer Options Box -->
+                        <div id="options-container" class="space-y-3 pt-2">
+                            <!-- Dynamic radio / checkbox / matrix options -->
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Quiz Navigation Buttons Footer -->
+                <div class="bg-slate-50 border-t border-slate-200 px-6 py-4 flex justify-between items-center">
+                    <button id="btn-prev" class="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-semibold px-4 py-2 rounded-xl text-sm transition flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i class="fa-solid fa-chevron-left"></i>
+                        <span>Sebelumnya</span>
+                    </button>
+
+                    <div class="flex items-center space-x-2">
+                        <button id="btn-next" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2 rounded-xl text-sm transition flex items-center space-x-2 shadow-md">
+                            <span>Berikutnya</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                        <button id="btn-finish" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2 rounded-xl text-sm transition flex items-center space-x-2 shadow-md">
+                            <i class="fa-solid fa-check-double"></i>
+                            <span>Selesai Ujian</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Sidebar: Question Grid Map (Collapsible) -->
+            <div id="quiz-sidebar" class="w-full lg:w-72 bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col space-y-4 transition-all duration-300 shrink-0">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <h4 class="font-bold text-slate-800 text-sm flex items-center space-x-2">
+                        <i class="fa-solid fa-border-all text-indigo-600"></i>
+                        <span>Navigasi Soal</span>
+                    </h4>
+                    <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-medium" id="sidebar-progress-text">0/30</span>
+                </div>
+
+                <!-- Number Grid -->
+                <div id="question-grid" class="grid grid-cols-5 gap-2 overflow-y-auto max-h-96 lg:max-h-none pr-1">
+                    <!-- Dynamic Question Buttons -->
+                </div>
+
+                <!-- Legend -->
+                <div class="border-t border-slate-100 pt-3 text-xs space-y-2 text-slate-500">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-3.5 h-3.5 rounded bg-indigo-600 border border-indigo-700 inline-block"></span>
+                        <span>Soal Aktif</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="w-3.5 h-3.5 rounded bg-emerald-500 inline-block"></span>
+                        <span>Sudah Dijawab</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="w-3.5 h-3.5 rounded bg-slate-100 border border-slate-300 inline-block"></span>
+                        <span>Belum Dijawab</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="result-section" class="hidden max-w-3xl mx-auto w-full space-y-6 my-6">
+            
+            <!-- Result Summary Card -->
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 text-center space-y-6">
+                <div id="result-status-icon" class="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-3xl shadow-inner">
+                    <!-- Icon injected JS -->
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-extrabold text-slate-800" id="result-status-title">Hasil Try Out TKA 2026</h2>
+                    <p class="text-slate-500 text-sm mt-1" id="result-status-subtitle">Pengolahan nilai latihan Bahasa Indonesia Paket 1</p>
+                </div>
+
+                <!-- Score Board -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Nilai Siswa</div>
+                        <div class="text-2xl font-black text-indigo-600 mt-1" id="score-display">0</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Target KKM</div>
+                        <div class="text-2xl font-black text-slate-700 mt-1">80</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Jawaban Benar</div>
+                        <div class="text-2xl font-black text-emerald-600 mt-1" id="correct-count-display">0</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Status Target</div>
+                        <div class="text-sm font-bold mt-2.5" id="target-status-display">-</div>
+                    </div>
+                </div>
+
+                <div id="result-message" class="text-sm text-slate-600 bg-indigo-50 border border-indigo-100 p-4 rounded-xl">
+                    <!-- Message dynamic -->
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-3 pt-2">
+                    <button id="btn-retest" class="w-full sm:w-auto bg-slate-800 hover:bg-slate-900 text-white font-bold px-6 py-3 rounded-xl text-sm transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Ulangi Ujian</span>
+                    </button>
+                    <button id="btn-view-cert" class="hidden w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-xl text-sm transition flex items-center justify-center space-x-2 shadow-lg shadow-amber-200">
+                        <i class="fa-solid fa-award"></i>
+                        <span>Cetak Sertifikat Kelulusan</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Printable Certificate Box (Shown if Passed) -->
+            <div id="printable-certificate" class="hidden bg-white p-10 rounded-2xl border-8 border-indigo-900 shadow-2xl relative overflow-hidden text-center">
+                <!-- Certificate Decorative Borders -->
+                <div class="border-2 border-amber-500 p-8 rounded-lg relative">
+                    <div class="flex justify-between items-center border-b-2 border-slate-200 pb-6 mb-6">
+                        <div class="text-left">
+                            <h3 class="text-2xl font-black text-indigo-950 uppercase tracking-widest">SERTIFIKAT KELULUSAN SEMENTARA</h3>
+                            <p class="text-xs text-amber-600 font-bold tracking-wider">TRY OUT TKA BAHASA INDONESIA 2026 - PAKET 1</p>
+                        </div>
+                        <div class="text-amber-500 text-4xl">
+                            <i class="fa-solid fa-certificate"></i>
+                        </div>
+                    </div>
+
+                    <p class="text-slate-600 text-sm mb-2">Diberikan kepada siswa berprestasi:</p>
+                    <h2 class="text-3xl font-extrabold text-slate-900 underline decoration-amber-400 decoration-2 mb-2" id="cert-student-name">NAMA SISWA</h2>
+                    <p class="text-sm text-slate-500 mb-6">No. Absen / NISN: <span id="cert-student-id" class="font-bold text-slate-700">00</span></p>
+
+                    <p class="text-slate-700 text-sm max-w-xl mx-auto leading-relaxed mb-6">
+                        Telah berhasil menyelesaikan Latihan Tes Kemampuan Akademik (TKA) Bahasa Indonesia 2026 dengan pencapaian nilai target memuaskan:
+                    </p>
+
+                    <div class="inline-block bg-indigo-50 border-2 border-indigo-200 rounded-2xl px-8 py-3 mb-8">
+                        <span class="text-xs uppercase font-bold text-indigo-500 block">NILAI CAPAIAN</span>
+                        <span class="text-4xl font-black text-indigo-700" id="cert-score">90</span>
+                    </div>
+
+                    <div class="flex justify-between items-end pt-6 border-t border-slate-200 text-xs text-slate-500">
+                        <div class="text-left">
+                            <p class="font-bold text-slate-700">Sistem CBT TKA 2026</p>
+                            <p id="cert-date">Tanggal: 17 Oktober 2026</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-slate-700">Guru Pengampu Bahasa Indonesia</p>
+                            <div class="h-12"></div>
+                            <p class="font-bold text-slate-800 underline">( Tanda Tangan Guru )</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // Raw Data questions with answers extracted from user document (colored red in original)
+        // Hidden source references (such as Kapanewon Berbah) are removed or sanitized.
+        
+        const TEXT_SOEDIRMAN = `<b>Jenderal Soedirman</b><br>
+Jenderal Soedirman adalah sosok pahlawan besar yang namanya tak lekang oleh waktu dalam sejarah perjuangan bangsa Indonesia. Ia dikenal sebagai Panglima Besar Tentara Nasional Indonesia (TNI). Ia memimpin perjuangan rakyat melawan penjajah. Dengan semangat pantang menyerah, Soedirman tetap memimpin perang gerilya melawan Belanda.<br><br>
+Dedikasi Jenderal Soedirman membuktikan bahwa kemerdekaan adalah hasil perjuangan dan pengorbanan tanpa batas. Meskipun harus dipanggul di atas tandu, Jenderal Soedirman tidak pernah meninggalkan medan perang. Keberanian dan strategi gerilya membuat Belanda kesulitan menundukkan pasukan Indonesia. Semangat juangnya membuktikan bahwa perjuangan dilakukan dengan senjata dan tekad yang kuat untuk mempertahankan kedaulatan bangsa.<br><br>
+Warisan moral Jenderal Soedirman terus dijadikan pedoman oleh TNI dan seluruh rakyat Indonesia. Beliau mengatakan, “Selama rakyat masih memiliki semangat juang, Indonesia tidak akan pernah kalah.” Semangat perjuangan dan cinta tanah air dapat mengalahkan segala keterbatasan. Semangat Jenderal Soedirman akan selalu hidup di hati bangsa Indonesia sebagai inspirasi untuk menjaga kedaulatan dan keutuhan NKRI.`;
+
+        const TEXT_WAWANCARA = `<b>Teks Wawancara Hemat Energi</b><br>
+Pewawancara : Enzo<br>
+Narasumber : Pak Barid<br>
+Tema : Hemat Energi<br>
+Hari, tanggal : Senin, 23 Februari 2026<br><br>
+Enzo : Apa kabar, Pak? Saya Enzo, akan menanyakan beberapa pertanyaan untuk Bapak. Apakah Bapak bersedia?<br>
+Pak Barid : Baik, silakan.<br>
+Enzo : Apa yang Pak Barid lakukan untuk menghemat energi?<br>
+Pak Barid : Salah satunya adalah bijak menggunakan alat elektronik seperti televisi, kipas angin, dan komputer.<br>
+Enzo : Siapa saja menurut Bapak yang harus menghemat energi?<br>
+Pak Barid : Menurut saya setiap individu bertanggung jawab atas ketersediaan energi.<br>
+Enzo : Apakah semua siswa di sekolah ini sudah melakukan penghematan energi?<br>
+Pak Barid : Hampir semuanya sudah, tapi masih ada yang belum. Saya akan berusaha menasihati anak-anak untuk melakukan penghematan energi.<br>
+Enzo : Kalau kata orang-orang, penghematan energi itu tujuannya untuk menjaga ketersediaan energi di bumi. Benar tidak, Pak?<br>
+Pak Barid : Tentu saja benar.<br>
+Enzo : Pak, apa akibatnya bila energi tidak dilakukan penghematan?<br>
+Pak Barid : Sangat berakibat fatal. Energi di bumi lama kelamaan akan terkuras lalu habis. Untuk itu, marilah kita melakukan kegiatan penghematan energi!<br>
+Enzo : Terimakasih Pak, saya mohon undur diri. Mohon maaf bila mengganggu waktu Bapak.<br>
+Pak Barid : Ya, sama-sama. Sama sekali tidak mengganggu, Enzo.`;
+
+        const TEXT_GAJAH = `<b>Gajah dan Ciri-Cirinya</b><br>
+Gajah memiliki ciri khusus. Belalai gajah panjang, kepalanya besar, dan telinganya lebar. Belalai gajah adalah perpanjangan dari bibir atas dan hidungnya yang berfungsi untuk bernapas, minum, dan makan. Ujung belalai gajah memiliki tonjolan berbentuk seperti lipatan. Hal ini membuat gajah bisa melakukan berbagai fungsi halus, misalnya mengambil koin di permukaan yang rata atau memecah kacang tanah lalu meniup kulitnya dan memasukkan bijinya ke dalam mulut.<br><br>
+Gajah menguasai berbagai jenis habitat. Gajah kerap ditemukan di savana, padang rumput, dan hutan. Mereka juga mampu hidup di habitat lain seperti gurun, rawa, bahkan dataran tinggi daerah tropis dan subtropis di Afrika dan Asia. Hewan ini bermigrasi secara musiman bergantung pada ketersediaan makanan dan air.<br><br>
+Gajah memiliki memori yang kuat dan mampu mengingat sesuatu di luar kepala. Ia mampu mengingat lokasi pasokan air di sepanjang rute yang dilewati. Gajah mampu mengenali rute migrasi. Gajah mampu mengenali kawan dan lawan, baik gajah lain maupun manusia. Didukung oleh otak terbesar di antara mamalia darat, gajah dapat mengingat lokasi makanan selama puluhan tahun.`;
+
+        const TEXT_KEONG_EMAS = `<b>Keong Emas</b><br>
+Dahulu kala di Kerajaan Daha, ada dua putri bernama Galuh Ajeng dan Candra Kirana. Galuh Ajeng iri pada Candra Kirana yang bertunangan dengan Pangeran Inu Kertapati. Disuruhnya nenek sihir jahat untuk mengutuk saudaranya menjadi keong mas.<br><br>
+Suatu hari, seorang nenek tua mencari ikan di sungai. Bukannya ikan yang ditangkap, justru seekor keong mas yang didapat. Keong mas itu lantas dibawa pulang dan dipelihara dengan aman.<br><br>
+Esok harinya si nenek mencari ikan lagi. Nasib baik belum datang, si nenek pulang ke rumah dalam keadaan lapar. Namun alangkah terkejutnya ia, ketika melihat banyak makanan telah tersaji di meja makan.<br><br>
+Berkali-kali keajaiban ini terjadi. Hingga suatu hari si nenek berpura-pura pergi, lalu ia kembali dan mengintip. Ternyata, keong mas yang didapatkan itu berubah wujud menjadi seorang putri yang cantik.<br><br>
+Di sisi lain, Pangeran Inu Kertapati bingung karena tunangannya telah hilang. Ia lantas menyamar menjadi seorang rakyat jelata untuk mencari Putri Candra Kirana. Kakek Sakti kemudian memberitahu sang pangeran bahwa sang putri berada di Desa Dadapan.<br><br>
+Pangeran Inu Kertapati akhirnya berhasil menemukan sang pujaan hati. Begitu mereka bertemu, kekuatan sihir pun hilang. Pangeran lantas memboyong Putri Candra Kirana ke istana dan mereka hidup bahagia selamanya.`;
+
+        const TEXT_ECOPRINT = `<b>Membuat Batik Ecoprint dengan Teknik Pounding</b><br>
+Batik ecoprint adalah metode pembuatan motif pada kain dengan cara menjiplak langsung bentuk dan warna alami dari tumbuhan. Pewarnaan kain ini dapat dilakukan dengan cara dikukus dan dengan cara dipukul (pounding).<br><br>
+<b>Alat dan bahan yang disiapkan:</b><br>
+• Kain putih berbahan katun dengan ukuran 1,5 m x 1,5 m<br>
+• Palu berbahan kayu<br>
+• Daun-daunan maupun bunga berbagai bentuk, ukuran, dan warna<br>
+• Plastik gulungan<br>
+• Tawas<br>
+• Panci atau ember<br><br>
+<b>Cara membuat:</b><br>
+1. Bentangkan kain di atas lantai.<br>
+2. Kita tata daun-daunan dan bunga di atas kain.<br>
+3. Kita tutup dengan plastik bening.<br>
+4. Kita mulai pukul kain yang terdapat daun-daunan dan bunga agar warna bisa tercetak di atas kain.<br>
+5. Setelah selesai memukul kita bersihkan kain dari daun-daun yang masih menempel dan tersisa melekat di kain.<br>
+6. Kita jemur kain tersebut hingga kering.<br>
+7. Rendam dengan air tawas selama kurang lebih 10 sampai 30 menit.<br>
+8. Jemur kembali kain hingga mengering.`;
+
+        const TEXT_PUISI = `<b>Pancaran Hidup</b><br>
+<i>Oleh : Amal Hamzah</i><br><br>
+Di pagi hari<br>
+Aku berangkat bekerja<br>
+Tampak olehku seorang lelaki<br>
+Mengorek-orek tong mencari nasi<br><br>
+	Sepintas hatiku sedih<br>
+	Terasa miskin badan sendiri<br>
+	<b>Di tengah kekayaan negeri maya</b><br>
+	<b>Awak menjadi peminta-minta</b><br><br>
+Lalu mataku menoleh kepadanya<br>
+Tampak tegap teguh semata<br>
+Tiada cacat membuat celaka<br><br>
+	Hatiku marah<br>
+	Orang begini tak perlu dikasihani<br>
+	Di dunia Allah penuh rezeki<br>
+	Ia tinggal bermalas diri`;
+
+        const TEXT_AYAM_SOMBONG = `<b>Ayam Jantan yang Sombong</b><br>
+Di sebuah peternakan tinggalah dua ekor ayam jantan si Hitam dan si Putih. Mereka menjadi penguasa di daerah itu. Ketika si Putih sedang asik mencari makan di pekarangan peternakan, tiba-tiba si Hitam menerjangnya. Si Putih tidak melawannya dan memilih bersembunyi di balik tumpukan jerami. Si Hitam merasa puas dapat mengalahkan Si Putih.<br><br>
+Hal tersebut membuat si Hitam yang sombong itu menjadi besar kepala dan semakin membanggakan dirinya. “Tak ada yang bisa mengalahkan aku di sini”. Aku adalah ayam terkuat yang patut menguasai dan menjadi raja di sini, cukkurukuuukkk” katanya sambil berkokok.<br><br>
+Ternyata secara tak sengaja, ada seekor elang yang sedang mencari mangsa lewat di atas peternakan itu. Melihat si Hitam yang berteriak-teriak sombong di atas atap, memberi kesempatan untuk si elang menyambar si Hitam. Cengkeram elang yang tidak begitu kuat menyebabkan si hitam terjatuh. Badan si Hitam terbentur bebatuan sehingga tubuhnya penuh luka.<br><br>
+“Tolong! Tolong!” teriak si Hitam sambil menahan sakit. Mendegar hal itu si Putih segera menghampiri dan menolongnya. Si Hitam mengucapkan terima kasih dan meminta maaf kepada si Putih. Si Putih memaafkannya. Kini si Hitam sadar ternyata ada yang lebih kuat dari dirinya.`;
+
+        const TEXT_SAMBUTAN_ULTAH = `<b>Teks Sambutan Ulang Tahun</b><br>
+Selamat datang seluruh tamu istimewa yang telah hadir. Terima kasih atas kehadiran Anda semua. Hari ini kita merayakan ulang tahun ke-12 Ariani, anak kami. Semoga Ariani selalu sehat, bahagia dan semua impiannya dapat tercapai.<br><br>
+Mari, kita nikmati acara seru yang sudah disiapkan. Acara ini akan dipandu oleh Raihanna. Acara akan dimulai dengan atraksi sirkus badut yang menampilkan akrobat lucu, sepeda roda satu, permainan keseimbangan dan sulap balon. Sebelum acara selesai nanti akan ada pembagian doorprize menarik.<br><br>
+Disela – sela acara, silakan anak-anak menikmati hidangan yang tersedia. Ada berbagai hidangan seperti dimsum, sosis bakar, nasi kuning dan satai ayam. Tersedia aneka minuman dingin antara lain es buah, es sirup dan es krim. Ada juga buah segar seperti semangka, melon, dan anggur.<br><br>
+Sebagai ungkapan terima kasih, di akhir acara akan ada sesi pembagian doorprize. Siapa yang dapat menjawab pertanyaan dari Raihanna berhak mengambil satu doorprize. Doorprize yang disediakan berupa perlengkapan sekolah seperti alat tulis, tas dan sepatu ada juga mainan seperti robot-robotan dan mobil-mobilan.<br><br>
+Mohon maaf jika ada kekurangan dalam acara ini. Sekali lagi, selamat ulang tahun untuk anak tercinta kami. Selamat bersenang-senang dan terima kasih atas kehadiran kalian!`;
+
+        const TEXT_SURALOKA = `<b>Liburan ke Suraloka Zoo</b><br>
+Liburan Idul Fitri kemarin, keluarga kami berlibur ke Suraloka Zoo. Wahana wisata yang baru berdiri tahun 2021 ini terletak di Kawasan Kaliurang, Sleman, Yogyakarta. Suraloka Zoo merupakan destinasi wisata yang menggabungkan konsep kebun binatang mini, wisata edukasi, dan wahana permainan anak.<br><br>
+Pertama kita masuk ke kebun binatang mini. Hewan yang berada di Suraloka Zoo dikelompokkan dalam berbagai tempat, seperti kandang mamalia, akuarium, dan aviari. Kita dapat melihat, berinteraksi langsung, dan memberi makan hewan dengan cara membeli pakannya terlebih dahulu. Kegiatan memberi makan hewan ini menjadi kegiatan favorit pengunjung anak-anak.<br><br>
+Selanjutnya kita mengunjungi wisata edukasi seperti mengenal jenis – jenis hewan dengan cara mewarnai dan membuat kerajinan tangan. Sedangkan untuk wahana permainan anak antara lain trampolin, mobil-mobilan, panahan mini, seluncuran yang menyenangkan dan aman bagi anak-anak.<br><br>
+Setelah berkeliling dan bermain, kita bisa bersantai dan beristirahat di kafe yang nyaman dengan berbagai macam menu. Suraloka Zoo berada di kaki Gunung Merapi sehingga kita bisa menikmati pemandangan hijau, udara sejuk, dan suasana alami yang menenangkan.`;
+
+        const TEXT_UNDANGAN = `<b>Surat Undangan Ulang Tahun</b><br>
+Sleman, 13 februari 2026<br><br>
+Untuk sahabatku, Ariani<br>
+Di Jalan Mawar No 21C Sleman<br><br>
+Hallo sahabatku,<br>
+Bagaimana kabarmu? Semoga selalu sehat dan bahagia ya. Aku punya kabar bahagia buat kamu. Bulan ini usiaku bertambah, aku ingin merayakan ulang tahun ke-12 bersama orang-orang tercinta. Aku berharap kamu bisa meluangkan waktu agar kita bisa mengukir kenangan indah bersama di hari ulang tahunku.<br><br>
+Acara ini akan dilaksanakan pada:<br>
+• Hari/tanggal : Minggu, 15 Februari 2026<br>
+• Tempat : Rumah Merliana, Jalan Melati No 23A Sleman<br>
+• Waktu : Pukul 18.30 – 20.00 WIB<br><br>
+Aku tidak sabar bertemu denganmu di acara ulangtahunku. Kita akan menikmati hidangan, dan mengabadikan momen bersama. Aku ingin menghabiskan waktu di hari spesialku dengan kehadiranmu. Kehadiranmu bagaikan air di tengah gurun pasir. Atas perhatian dan kehadiranmu, aku ucapkan terima kasih. Sampai jumpa di pesta ulang tahunku!<br><br>
+Salam hangat dari sahabatmu,<br>
+Merliana`;
+
+        // Question Master Data
+        const rawQuestions = [
+            {
+                id: 1,
+                type: 'single',
+                stimulus: TEXT_SOEDIRMAN,
+                question: "Apa makna dedikasi pada teks tersebut?",
+                options: [
+                    "peraturan dan petunjuk yang harus dilakukan",
+                    "segala sesuatu yang diperlukan untuk menyampaikan maksud",
+                    "pengorbanan tenaga, pikiran, dan waktu demi keberhasilan tujuan mulia",
+                    "syarat dan permintaan yang harus dipenuhi untuk mencapai yang diinginkan"
+                ],
+                answer: [2] // Index 2 is correct (0-based)
+            },
+            {
+                id: 2,
+                type: 'multiple',
+                stimulus: TEXT_SOEDIRMAN,
+                question: "Apa yang dilakukan Jenderal Soedirman untuk membuat Belanda kesulitan menundukkan pasukan Indonesia? (Pilihan jawaban benar lebih dari satu)",
+                options: [
+                    "melakukan strategi perang gerilya",
+                    "semangat berjuang dan keberanian melawan Belanda",
+                    "bekerja sama dengan Belanda kemudian menundukkannya"
+                ],
+                answer: [0, 1]
+            },
+            {
+                id: 3,
+                type: 'single',
+                stimulus: TEXT_SOEDIRMAN,
+                question: "Apa ide pokok paragraf ketiga?",
+                options: [
+                    "sejarah Jenderal Soedirman",
+                    "biografi Jenderal Soedirman",
+                    "dedikasi Jenderal Soedirman",
+                    "warisan moral Jenderal Soedirman"
+                ],
+                answer: [3]
+            },
+            {
+                id: 4,
+                type: 'multiple',
+                stimulus: TEXT_WAWANCARA,
+                question: "Apa kata umum yang terdapat dari teks wawancara tersebut? (Pilihan jawaban benar lebih dari satu)",
+                options: [
+                    "televisi",
+                    "elektronik",
+                    "energi"
+                ],
+                answer: [1, 2]
+            },
+            {
+                id: 5,
+                type: 'single',
+                stimulus: TEXT_WAWANCARA,
+                question: "Apa informasi yang terdapat pada teks wawancara tersebut?",
+                options: [
+                    "Energi di bumi tidak akan habis dan bisa terus dimanfaatkan.",
+                    "Hemat energi bisa dilakukan dengan bijak menggunakan alat-alat elektronik.",
+                    "Penghematan energi itu bertujuan untuk menjaga keindahan alam pedesaan.",
+                    "Ketersediaan energi adalah tanggung jawab pemerintah dan orang dewasa saja."
+                ],
+                answer: [1]
+            },
+            {
+                id: 6,
+                type: 'matrix',
+                stimulus: TEXT_WAWANCARA,
+                question: "Setelah membaca teks wawancara, tentukan Benar atau Salah untuk setiap pernyataan berikut!",
+                statements: [
+                    { id: 's1', text: "Pendapat Pak Barid sudah sesuai dengan tema cerita.", key: "Benar" },
+                    { id: 's2', text: "Pak Barid akan berusaha menasihati murid-murid untuk melakukan penghematan energi.", key: "Benar" },
+                    { id: 's3', text: "Kalimat ajakan Pak Barid di akhir wawancara tidak sesuai dengan tema.", key: "Salah" }
+                ]
+            },
+            {
+                id: 7,
+                type: 'single',
+                stimulus: TEXT_GAJAH,
+                question: "Isi paragraf kedua pada teks tersebut adalah ...",
+                options: [
+                    "Ciri khusus gajah.",
+                    "Gajah memiliki ingatan yang kuat.",
+                    "Berbagai jenis habitat dikuasai gajah.",
+                    "Gajah hidup di savana, padang rumput, dan hutan."
+                ],
+                answer: [2]
+            },
+            {
+                id: 8,
+                type: 'single',
+                stimulus: TEXT_GAJAH,
+                question: "Makna kata luar kepala pada teks tersebut adalah ....",
+                options: [
+                    "sangat hafal",
+                    "sangat pintar",
+                    "sangat mahir",
+                    "sangat menguasai"
+                ],
+                answer: [0]
+            },
+            {
+                id: 9,
+                type: 'matrix',
+                stimulus: TEXT_GAJAH,
+                question: "Apa gagasan pendukung pada paragraf ketiga teks tersebut? Tentukan Benar atau Salah!",
+                statements: [
+                    { id: 's1', text: "Memori gajah yang kuat dan ingatan di luar kepala.", key: "Salah" },
+                    { id: 's2', text: "Gajah mampu mengenali rute migrasi.", key: "Benar" },
+                    { id: 's3', text: "Gajah dapat mengingat lokasi makanan selama puluhan tahun.", key: "Benar" }
+                ]
+            },
+            {
+                id: 10,
+                type: 'single',
+                stimulus: TEXT_KEONG_EMAS,
+                question: "Kosa kata yang memiliki makna 'orang yang disayangi' pada teks ditunjukkan frasa .....",
+                options: [
+                    "Putri Candra Kirana",
+                    "hidup bahagia",
+                    "rakyat jelata",
+                    "pujaan hati"
+                ],
+                answer: [3]
+            },
+            {
+                id: 11,
+                type: 'single',
+                stimulus: TEXT_KEONG_EMAS,
+                question: "Perubahan latar suasana pada awal dan akhir cerita yang dialami Putri Candra Kirana adalah ….",
+                options: [
+                    "ceria menjadi bahagia",
+                    "sedih menjadi bahagia",
+                    "teraniaya menjadi sengsara",
+                    "kecewa menjadi sengsara"
+                ],
+                answer: [1]
+            },
+            {
+                id: 12,
+                type: 'matrix',
+                stimulus: TEXT_KEONG_EMAS,
+                question: "Berikut ini tentukan Benar atau Salah untuk pernyataan yang menunjukkan perasaan bahagia berdasarkan teks!",
+                statements: [
+                    { id: 's1', text: "Keajaiban terjadi Keong Emas berubah menjadi putri yang cantik jelita.", key: "Benar" },
+                    { id: 's2', text: "Pangeran Inu Kertapati akhirnya berhasil menemukan sang pujaan hati.", key: "Benar" },
+                    { id: 's3', text: "Putri Candra Kirana dikutuk menjadi seekor keong emas.", key: "Salah" }
+                ]
+            },
+            {
+                id: 13,
+                type: 'multiple',
+                stimulus: TEXT_ECOPRINT,
+                question: "Apa saja bahan alam yang digunakan untuk membuat ecoprint dengan teknik pounding? (Pilihan jawaban benar lebih dari satu)",
+                options: [
+                    "Daun daunan dan Bunga",
+                    "Plastik gulungan",
+                    "Tawas"
+                ],
+                answer: [0]
+            },
+            {
+                id: 14,
+                type: 'single',
+                stimulus: TEXT_ECOPRINT,
+                question: "Apa yang terjadi setelah daun dan bunga selesai dipukul-pukul?",
+                options: [
+                    "motif daun dan bunga tertempel di kain.",
+                    "warna maupun motif daun dan bunga tercetak di kain.",
+                    "daun dan bunga yang sudah hancur masih menempel di plastik.",
+                    "daun harus direndam agar motif maupun warna daun dan bunga muncul."
+                ],
+                answer: [1]
+            },
+            {
+                id: 15,
+                type: 'matrix_custom',
+                stimulus: "Meli bercita-cita menjadi juara kelas. Setiap hari yang dilakukannya adalah bermalas-malasan. Saat di kelas Meli lebih asyik bercerita dengan teman daripada mendengarkan penjelasan guru. Waktu luang lebih banyak digunakan untuk bermain ponsel atau menonton televisi. Akibatnya saat rapor dibagikan Meli tidak menjadi juara kelas melainkan siswa rangking 1 dari belakang.",
+                question: "Tentukan Sesuai atau Tidak Sesuai untuk setiap peribahasa berikut yang menggambarkan situasi Meli!",
+                statements: [
+                    { id: 's1', text: "Bagai punguk merindukan bulan.", key: "Sesuai" },
+                    { id: 's2', text: "Harapkan guntur di langit, air tempayan dicurahkan.", key: "Tidak Sesuai" },
+                    { id: 's3', text: "Hasrat hati memeluk gunung, apalah daya tangan tak sampai.", key: "Sesuai" }
+                ]
+            },
+            {
+                id: 16,
+                type: 'single',
+                stimulus: TEXT_PUISI,
+                question: "Pesan moral yang sesuai dengan puisi 'Pancaran Hidup' adalah …",
+                options: [
+                    "Jangan menjadi pengemis jika memiliki badan yang penuh kekurangan.",
+                    "Kita harus bekerja dengan penuh semangat agar tidak menjadi pengemis.",
+                    "Kita harus mengoptimalkan potensi yang kita miliki dengan sebaik-baiknya.",
+                    "Sebaiknya menolak dengan marah jika ada pengemis yang meminta-minta."
+                ],
+                answer: [2]
+            },
+            {
+                id: 17,
+                type: 'matrix_custom',
+                stimulus: TEXT_PUISI,
+                question: "Makna yang sesuai dari kata-kata yang dicetak tebal ('Di tengah kekayaan negeri maya / Awak menjadi peminta-minta'). Tentukan Sesuai atau Tidak Sesuai!",
+                statements: [
+                    { id: 's1', text: "Orang masih hidup miskin di tengah-tengah negara yang memiliki berbagai sumber daya alam.", key: "Sesuai" },
+                    { id: 's2', text: "Negara memiliki kekayaan melimpah namun masih ada rakyat yang hidup miskin.", key: "Sesuai" },
+                    { id: 's3', text: "Masyarakat akan hidup miskin jika negara memiliki kekayaan yang melimpah.", key: "Tidak Sesuai" }
+                ]
+            },
+            {
+                id: 18,
+                type: 'multiple',
+                stimulus: TEXT_PUISI,
+                question: "Bagaimana perasaan si penulis kepada si pengemis berdasarkan puisi tersebut? (Pilihan jawaban benar lebih dari satu)",
+                options: [
+                    "Bahagia",
+                    "Sedih",
+                    "Marah"
+                ],
+                answer: [1, 2]
+            },
+            {
+                id: 19,
+                type: 'multiple',
+                stimulus: TEXT_AYAM_SOMBONG,
+                question: "Apa kesimpulan peristiwa cerita tersebut? (Pilihan jawaban benar lebih dari satu)",
+                options: [
+                    "Si Putih menjadi penguasa dan paling kuat di peternakan.",
+                    "Si Putih dan si Hitam, keduanya menjadi rukun gara-gara seekor elang.",
+                    "Si Hitam meminta maaf kepada si Putih dan menyadari kesombongannya membuat dirinya celaka."
+                ],
+                answer: [1, 2]
+            },
+            {
+                id: 20,
+                type: 'matrix_custom',
+                stimulus: TEXT_AYAM_SOMBONG,
+                question: "Apa amanat yang sesuai isi cerita tersebut? Tentukan Sesuai atau Tidak Sesuai!",
+                statements: [
+                    { id: 's1', text: "Kekuatan dan kelebihan untuk mengalahkan orang yang lemah.", key: "Tidak Sesuai" },
+                    { id: 's2', text: "Sebaiknya kita mau meminta maaf atas kesalahan yang diperbuat kepada orang lain.", key: "Sesuai" },
+                    { id: 's3', text: "Kita harus berterima kasih kepada orang yang sudah membantu.", key: "Sesuai" }
+                ]
+            },
+            {
+                id: 21,
+                type: 'single',
+                stimulus: TEXT_AYAM_SOMBONG,
+                question: "Apa ikhtisar dari cerita tersebut?",
+                options: [
+                    "Si Hitam yang sombong menerjang si Putih. Si Hitam merasa paling kuat, namun dapat dikalahkan oleh elang. Si Hitam yang terluka ditolong si Putih, lalu si Hitam mengucapkan terima kasih dan meminta maaf atas perbuatannya.",
+                    "Si Hitam adalah ayam jantan yang sombong dan mau berteman dengan si Putih. Ketika elang menyambar si Hitam dan terluka si Putih dengan tulus membantu. Si Hitam mengucapkan terima kasih kepada si Putih.",
+                    "Si Hitam tidak mau berteman dengan si Putih. Si Hitam merasa paling kuat dan berhak menjadi raja. Si Putih setuju dengan pernyataan si Hitam. Ketika elang menyambar si Hitam dan terluka si Putih dengan tulus membantu.",
+                    "Si putih menolong si Hitam ketika di sambar elang. Si Putih menyadari bahwa si Hitam memang pantas jadi raja di peternakan itu. Si Putih dengan tulus membantu. Si Hitam mengucapkan terima kasih dan meminta maaf."
+                ],
+                answer: [0]
+            },
+            {
+                id: 22,
+                type: 'multiple',
+                stimulus: TEXT_SAMBUTAN_ULTAH,
+                question: "Apa kata khusus pada teks tersebut? (Pilihan jawaban benar lebih dari satu)",
+                options: [
+                    "Semangka",
+                    "Minuman",
+                    "Tas"
+                ],
+                answer: [0, 2]
+            },
+            {
+                id: 23,
+                type: 'single',
+                stimulus: TEXT_SAMBUTAN_ULTAH,
+                question: "Manakah pernyataan yang sesuai dengan isi teks tersebut?",
+                options: [
+                    "Acara pembagian doorprize dilakukan pada awal acara.",
+                    "Sambutan ulang tahun Ariani disampaikan oleh Raihanna.",
+                    "Semua undangan yang hadir akan mendapatkan doorprize.",
+                    "Keluarga Ariani menyediakan berbagai makanan dan minuman."
+                ],
+                answer: [3]
+            },
+            {
+                id: 24,
+                type: 'matrix_custom',
+                stimulus: TEXT_SAMBUTAN_ULTAH,
+                question: "Apa contoh peristiwa yang dapat ditemukan dalam kehidupan sehari-hari seperti yang akan Raihanna lakukan sebagai pemandu acara pada teks sambutan tersebut? Tentukan Sesuai atau Tidak Sesuai!",
+                statements: [
+                    { id: 's1', text: "Reva akan memimpin acara sesuai dengan susunan kegiatan yang telah dirancang.", key: "Sesuai" },
+                    { id: 's2', text: "Reni akan membawakan acara sesuai dengan kemauannya.", key: "Tidak Sesuai" },
+                    { id: 's3', text: "Putri akan memandu jalannya kegiatan sesuai susunan acara yang sudah disiapkan.", key: "Sesuai" }
+                ]
+            },
+            {
+                id: 25,
+                type: 'single',
+                stimulus: TEXT_SURALOKA,
+                question: "“Hewan yang berada di Suraloka Zoo dikelompokkan dalam berbagai tempat, seperti kandang mamalia, akuarium, dan aviari.” Apa makna 'aviari' berdasarkan teks tersebut?",
+                options: [
+                    "bak kaca tempat memelihara ikan hias",
+                    "bangunan berukuran besar tempat memelihara berbagai jenis burung",
+                    "bangunan berukuran besar tempat memelihara berbagai jenis hewan melata",
+                    "bangunan dengan atap dan dinding transparan untuk menanam tumbuh-tumbuhan"
+                ],
+                answer: [1]
+            },
+            {
+                id: 26,
+                type: 'single',
+                stimulus: TEXT_SURALOKA,
+                question: "Bagan manakah yang paling sesuai untuk menggambarkan alur urutan kunjungan dalam teks?",
+                options: [
+                    "Liburan Idul Fitri -> Masuk ke Kebun Binatang Mini -> Wisata Edukasi & Wahana -> Bersantai di Kafe",
+                    "Liburan Idul Fitri -> Masuk ke Kebun Binatang Mini -> Bersantai di Kafe -> Wisata Edukasi",
+                    "Masuk ke Kebun Binatang Mini -> Liburan Idul Fitri -> Wisata Edukasi -> Bersantai di Kafe",
+                    "Liburan Idul Fitri -> Wisata Edukasi -> Masuk ke Kebun Binatang Mini -> Bersantai di Kafe"
+                ],
+                answer: [0]
+            },
+            {
+                id: 27,
+                type: 'matrix_custom',
+                stimulus: TEXT_SURALOKA,
+                question: "Apa informasi yang sesuai dengan teks tersebut? Tentukan Sesuai atau Tidak Sesuai!",
+                statements: [
+                    { id: 's1', text: "Kita bisa menikmati pemandangan hijau, udara sejuk, dan suasana alami yang menenangkan karena Suraloka Zoo terletak di kaki Gunung Merapi.", key: "Sesuai" },
+                    { id: 's2', text: "Wisata Suraloka Zoo terdapat kebun binatang mini, wisata edukasi, dan wahana permainan anak.", key: "Sesuai" },
+                    { id: 's3', text: "Kita bisa mengenal jenis hewan di wisata edukasi dengan cara menggambar, mewarnai dan membuat kerajinan tangan.", key: "Tidak Sesuai" }
+                ]
+            },
+            {
+                id: 28,
+                type: 'single',
+                stimulus: TEXT_UNDANGAN,
+                question: "Di mana alamat rumah Ariani berdasarkan teks surat undangan?",
+                options: [
+                    "Jalan Melati No 23C Sleman",
+                    "Jalan Mawar No 21A Sleman",
+                    "Jalan Mawar No 21C Sleman",
+                    "Jalan Melati No 23A Sleman"
+                ],
+                answer: [2]
+            },
+            {
+                id: 29,
+                type: 'single',
+                stimulus: TEXT_UNDANGAN,
+                question: "Arti dari kiasan 'kehadiranmu bagaikan air di tengah gurun pasir' pada teks tersebut adalah . . .",
+                options: [
+                    "sesuatu pelepas dahaga",
+                    "sesuatu yang sangat dinantikan",
+                    "sesuatu yang menyegarkan",
+                    "sesuatu yang mustahil"
+                ],
+                answer: [1]
+            },
+            {
+                id: 30,
+                type: 'multiple',
+                stimulus: TEXT_UNDANGAN,
+                question: "Tentukan pernyataan yang sesuai dengan teks undangan ulang tahun tersebut! (Pilihan jawaban benar lebih dari satu)",
+                options: [
+                    "Perayaan ulang tahun Merliana pada tanggal 15 Februari 2026",
+                    "Merliana merayakan ulang tahun ke-13 pada hari Minggu",
+                    "Ulang tahun Merliana dimulai pukul 18.30 di Jalan Melati No 23A Sleman"
+                ],
+                answer: [0, 2]
+            }
+        ];
+
+        let studentData = { name: '', id: '' };
+        let activeQuestions = [];
+        let userAnswers = {}; // Map question index -> user choice
+        let currentQuestionIdx = 0;
+        let fontSizes = ['text-size-sm', 'text-size-base', 'text-size-lg', 'text-size-xl'];
+        let currentFontSizeIdx = 1; // Default 'text-size-base'
+        
+        // Anti Cheating Variables
+        let cheatTimer = null;
+        let cheatCountdown = 10;
+        let isQuizActive = false;
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function prepareQuizQuestions() {
+            // Deep copy and randomize options while preserving answer keys correctly
+            const shuffled = shuffleArray(rawQuestions).map((q) => {
+                const newQ = { ...q };
+
+                if (q.type === 'single' || q.type === 'multiple') {
+                    // Create option objects with original indices
+                    const mappedOpts = q.options.map((optText, origIdx) => ({
+                        text: optText,
+                        isCorrect: q.answer.includes(origIdx)
+                    }));
+                    
+                    const shuffledOpts = shuffleArray(mappedOpts);
+                    newQ.shuffledOptions = shuffledOpts.map(o => o.text);
+                    newQ.shuffledAnswers = [];
+                    shuffledOpts.forEach((o, idx) => {
+                        if (o.isCorrect) newQ.shuffledAnswers.push(idx);
+                    });
+                } else if (q.type === 'matrix' || q.type === 'matrix_custom') {
+                    // Keep statement order or shuffle statements
+                    newQ.statements = q.statements;
+                }
+                return newQ;
+            });
+
+            return shuffled;
+        }
+
+        const identitySection = document.getElementById('identity-section');
+        const quizSection = document.getElementById('quiz-section');
+        const resultSection = document.getElementById('result-section');
+        const quizControls = document.getElementById('quiz-controls');
+
+        const formIdentity = document.getElementById('form-identity');
+        const inputStudentName = document.getElementById('input-student-name');
+        const inputStudentId = document.getElementById('input-student-id');
+
+        const questionContentBox = document.getElementById('question-content-box');
+        const readingStimulusBox = document.getElementById('reading-stimulus-box');
+        const readingStimulusContent = document.getElementById('reading-stimulus-content');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+
+        const questionBadge = document.getElementById('question-badge');
+        const questionTypeBadge = document.getElementById('question-type-badge');
+        const answeredCountDisplay = document.getElementById('answered-count');
+        const totalQuestionsCountDisplay = document.getElementById('total-questions-count');
+
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const btnFinish = document.getElementById('btn-finish');
+        const btnToggleSidebar = document.getElementById('btn-toggle-sidebar');
+        const quizSidebar = document.getElementById('quiz-sidebar');
+        const questionGrid = document.getElementById('question-grid');
+        const sidebarProgressText = document.getElementById('sidebar-progress-text');
+
+        const cheatWarningOverlay = document.getElementById('cheat-warning-overlay');
+        const cheatTimerCount = document.getElementById('cheat-timer-count');
+        const cheatBadge = document.getElementById('cheat-badge');
+
+        formIdentity.addEventListener('submit', (e) => {
+            e.preventDefault();
+            studentData.name = inputStudentName.value.trim();
+            studentData.id = inputStudentId.value.trim();
+
+            if (!studentData.name || !studentData.id) return;
+
+            startQuiz();
+        });
+
+        // Anti-Cheating: Detect Visibility Loss (Tab switch / App blur)
+        document.addEventListener('visibilitychange', () => {
+            if (!isQuizActive) return;
+
+            if (document.hidden) {
+                triggerCheatWarning();
+            } else {
+                clearCheatWarning();
+            }
+        });
+
+        window.addEventListener('blur', () => {
+            if (isQuizActive && !document.hidden) {
+                triggerCheatWarning();
+            }
+        });
+
+        window.addEventListener('focus', () => {
+            if (isQuizActive) {
+                clearCheatWarning();
+            }
+        });
+
+        function triggerCheatWarning() {
+            cheatWarningOverlay.classList.remove('hidden');
+            cheatBadge.className = "bg-red-500/20 border border-red-400 text-red-200 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5";
+            cheatBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-red-400 animate-ping"></span><span>Peringatan Keluar Tab!</span>`;
+
+            if (!cheatTimer) {
+                cheatCountdown = 10;
+                cheatTimerCount.innerText = cheatCountdown;
+                cheatTimer = setInterval(() => {
+                    cheatCountdown--;
+                    cheatTimerCount.innerText = cheatCountdown;
+
+                    if (cheatCountdown <= 0) {
+                        clearInterval(cheatTimer);
+                        cheatTimer = null;
+                        resetQuizDueToCheating();
+                    }
+                }, 1000);
+            }
+        }
+
+        function clearCheatWarning() {
+            cheatWarningOverlay.classList.add('hidden');
+            if (cheatTimer) {
+                clearInterval(cheatTimer);
+                cheatTimer = null;
+            }
+            cheatBadge.className = "bg-emerald-500/20 border border-emerald-400 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5";
+            cheatBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span>Status: Aman</span>`;
+        }
+
+        function resetQuizDueToCheating() {
+            isQuizActive = false;
+            clearCheatWarning();
+            alert("PERINGATAN SISWA:\nAnda terdeteksi meninggalkan aplikasi lebih dari 10 detik! Sesuai aturan, pengerjaan soal di-reset.");
+            userAnswers = {};
+            currentQuestionIdx = 0;
+            quizSection.classList.add('hidden');
+            quizControls.classList.add('hidden');
+            identitySection.classList.remove('hidden');
+        }
+
+        document.getElementById('btn-zoom-in').addEventListener('click', () => {
+            if (currentFontSizeIdx < fontSizes.length - 1) {
+                currentFontSizeIdx++;
+                applyFontSize();
+            }
+        });
+
+        document.getElementById('btn-zoom-out').addEventListener('click', () => {
+            if (currentFontSizeIdx > 0) {
+                currentFontSizeIdx--;
+                applyFontSize();
+            }
+        });
+
+        document.getElementById('btn-zoom-reset').addEventListener('click', () => {
+            currentFontSizeIdx = 1;
+            applyFontSize();
+        });
+
+        function applyFontSize() {
+            const currentSizeClass = fontSizes[currentFontSizeIdx];
+            fontSizes.forEach(cls => {
+                questionText.classList.remove(cls);
+                readingStimulusContent.classList.remove(cls);
+            });
+            questionText.classList.add(currentSizeClass);
+            readingStimulusContent.classList.add(currentSizeClass);
+        }
+
+        // Toggle Sidebar visibility
+        btnToggleSidebar.addEventListener('click', () => {
+            quizSidebar.classList.toggle('hidden');
+        });
+
+        function startQuiz() {
+            activeQuestions = prepareQuizQuestions();
+            userAnswers = {};
+            currentQuestionIdx = 0;
+            isQuizActive = true;
+
+            identitySection.classList.add('hidden');
+            quizSection.classList.remove('hidden');
+            quizControls.classList.remove('hidden');
+
+            totalQuestionsCountDisplay.innerText = activeQuestions.length;
+            renderQuestionGrid();
+            renderCurrentQuestion();
+        }
+
+        function renderQuestionGrid() {
+            questionGrid.innerHTML = '';
+            activeQuestions.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `h-10 rounded-lg text-xs font-bold transition flex items-center justify-center border ${getQuestionGridStatusClass(idx)}`;
+                btn.innerText = idx + 1;
+                btn.addEventListener('click', () => {
+                    currentQuestionIdx = idx;
+                    renderCurrentQuestion();
+                });
+                questionGrid.appendChild(btn);
+            });
+
+            updateProgressCount();
+        }
+
+        function getQuestionGridStatusClass(idx) {
+            const isAnswered = isQuestionAnswered(idx);
+            if (idx === currentQuestionIdx) {
+                return 'bg-indigo-600 text-white border-indigo-700 ring-2 ring-indigo-300';
+            }
+            if (isAnswered) {
+                return 'bg-emerald-500 text-white border-emerald-600';
+            }
+            return 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100';
+        }
+
+        function isQuestionAnswered(idx) {
+            const ans = userAnswers[idx];
+            if (ans === undefined || ans === null) return false;
+            if (Array.isArray(ans)) return ans.length > 0;
+            if (typeof ans === 'object') return Object.keys(ans).length === activeQuestions[idx].statements.length;
+            return true;
+        }
+
+        function updateProgressCount() {
+            let answeredCount = 0;
+            activeQuestions.forEach((_, idx) => {
+                if (isQuestionAnswered(idx)) answeredCount++;
+            });
+            answeredCountDisplay.innerText = answeredCount;
+            sidebarProgressText.innerText = `${answeredCount}/${activeQuestions.length}`;
+        }
+
+        function renderCurrentQuestion() {
+            const q = activeQuestions[currentQuestionIdx];
+
+            // Update Header Badges
+            questionBadge.innerText = `Soal No. ${currentQuestionIdx + 1}`;
+            
+            if (q.type === 'single') {
+                questionTypeBadge.innerText = "Pilihan Ganda";
+            } else if (q.type === 'multiple') {
+                questionTypeBadge.innerText = "Pilihan Ganda Kompleks (Lebih dari 1)";
+            } else {
+                questionTypeBadge.innerText = "Soal Pernyataan (Benar / Salah)";
+            }
+
+            // Stimulus Text Handling
+            if (q.stimulus) {
+                readingStimulusBox.classList.remove('hidden');
+                readingStimulusContent.innerHTML = q.stimulus;
+            } else {
+                readingStimulusBox.classList.add('hidden');
+            }
+
+            // Question Text
+            questionText.innerText = q.question;
+
+            // Render Options
+            optionsContainer.innerHTML = '';
+
+            if (q.type === 'single') {
+                const currentAns = userAnswers[currentQuestionIdx];
+                q.shuffledOptions.forEach((optText, optIdx) => {
+                    const label = document.createElement('label');
+                    label.className = `flex items-start space-x-3 p-3.5 rounded-xl border transition cursor-pointer ${currentAns === optIdx ? 'bg-indigo-50 border-indigo-500 text-indigo-900 font-medium' : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'}`;
+                    
+                    const isChecked = currentAns === optIdx;
+                    label.innerHTML = `
+                        <input type="radio" name="option_q" value="${optIdx}" ${isChecked ? 'checked' : ''} class="mt-1 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-slate-300">
+                        <span class="text-sm leading-relaxed">${String.fromCharCode(65 + optIdx)}. ${optText}</span>
+                    `;
+
+                    label.querySelector('input').addEventListener('change', () => {
+                        userAnswers[currentQuestionIdx] = optIdx;
+                        renderCurrentQuestion();
+                        renderQuestionGrid();
+                    });
+
+                    optionsContainer.appendChild(label);
+                });
+            } else if (q.type === 'multiple') {
+                const currentAnsArr = userAnswers[currentQuestionIdx] || [];
+                q.shuffledOptions.forEach((optText, optIdx) => {
+                    const label = document.createElement('label');
+                    const isChecked = currentAnsArr.includes(optIdx);
+                    label.className = `flex items-start space-x-3 p-3.5 rounded-xl border transition cursor-pointer ${isChecked ? 'bg-indigo-50 border-indigo-500 text-indigo-900 font-medium' : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'}`;
+                    
+                    label.innerHTML = `
+                        <input type="checkbox" value="${optIdx}" ${isChecked ? 'checked' : ''} class="mt-1 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-slate-300 rounded">
+                        <span class="text-sm leading-relaxed">${String.fromCharCode(65 + optIdx)}. ${optText}</span>
+                    `;
+
+                    label.querySelector('input').addEventListener('change', (e) => {
+                        let updated = [...(userAnswers[currentQuestionIdx] || [])];
+                        if (e.target.checked) {
+                            updated.push(optIdx);
+                        } else {
+                            updated = updated.filter(i => i !== optIdx);
+                        }
+                        userAnswers[currentQuestionIdx] = updated;
+                        renderCurrentQuestion();
+                        renderQuestionGrid();
+                    });
+
+                    optionsContainer.appendChild(label);
+                });
+            } else if (q.type === 'matrix' || q.type === 'matrix_custom') {
+                const currentAnsObj = userAnswers[currentQuestionIdx] || {};
+                const isCustom = q.type === 'matrix_custom';
+                const col1Label = isCustom ? "Sesuai" : "Benar";
+                const col2Label = isCustom ? "Tidak Sesuai" : "Salah";
+
+                const table = document.createElement('div');
+                table.className = "overflow-x-auto border border-slate-200 rounded-xl bg-white";
+                
+                let tableHtml = `
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                                <th class="p-3 font-semibold">Pernyataan</th>
+                                <th class="p-3 text-center w-24">${col1Label}</th>
+                                <th class="p-3 text-center w-28">${col2Label}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                `;
+
+                q.statements.forEach((st) => {
+                    const val = currentAnsObj[st.id];
+                    tableHtml += `
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 text-slate-800">${st.text}</td>
+                            <td class="p-3 text-center">
+                                <input type="radio" name="st_${st.id}" value="${col1Label}" ${val === col1Label ? 'checked' : ''} class="h-4 w-4 text-indigo-600 focus:ring-indigo-500">
+                            </td>
+                            <td class="p-3 text-center">
+                                <input type="radio" name="st_${st.id}" value="${col2Label}" ${val === col2Label ? 'checked' : ''} class="h-4 w-4 text-indigo-600 focus:ring-indigo-500">
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                tableHtml += `</tbody></table>`;
+                table.innerHTML = tableHtml;
+
+                // Attach change listeners to matrix radios
+                table.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        const stId = e.target.name.replace('st_', '');
+                        if (!userAnswers[currentQuestionIdx]) userAnswers[currentQuestionIdx] = {};
+                        userAnswers[currentQuestionIdx][stId] = e.target.value;
+                        renderQuestionGrid();
+                    });
+                });
+
+                optionsContainer.appendChild(table);
+            }
+
+            // Prev & Next Buttons state
+            btnPrev.disabled = currentQuestionIdx === 0;
+
+            if (currentQuestionIdx === activeQuestions.length - 1) {
+                btnNext.classList.add('hidden');
+                btnFinish.classList.remove('hidden');
+            } else {
+                btnNext.classList.remove('hidden');
+                btnFinish.classList.add('hidden');
+            }
+
+            renderQuestionGrid();
+            questionContentBox.scrollTop = 0;
+        }
+
+        btnPrev.addEventListener('click', () => {
+            if (currentQuestionIdx > 0) {
+                currentQuestionIdx--;
+                renderCurrentQuestion();
+            }
+        });
+
+        btnNext.addEventListener('click', () => {
+            if (currentQuestionIdx < activeQuestions.length - 1) {
+                currentQuestionIdx++;
+                renderCurrentQuestion();
+            }
+        });
+
+        btnFinish.addEventListener('click', () => {
+            const answered = Object.keys(userAnswers).length;
+            if (answered < activeQuestions.length) {
+                if (!confirm(`Anda baru menjawab ${answered} dari ${activeQuestions.length} soal. Yakin ingin mengakhiri ujian?`)) {
+                    return;
+                }
+            } else {
+                if (!confirm("Apakah Anda yakin ingin menyelesaikan ujian ini?")) return;
+            }
+            calculateAndDisplayResults();
+        });
+
+        function calculateAndDisplayResults() {
+            isQuizActive = false;
+            let totalScore = 0;
+            let correctCount = 0;
+            const pointsPerQuestion = 100 / activeQuestions.length;
+
+            activeQuestions.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+
+                if (q.type === 'single') {
+                    if (userAns !== undefined && q.shuffledAnswers.includes(userAns)) {
+                        totalScore += pointsPerQuestion;
+                        correctCount++;
+                    }
+                } else if (q.type === 'multiple') {
+                    if (Array.isArray(userAns)) {
+                        const isExactMatch = userAns.length === q.shuffledAnswers.length &&
+                            userAns.every(val => q.shuffledAnswers.includes(val));
+                        if (isExactMatch) {
+                            totalScore += pointsPerQuestion;
+                            correctCount++;
+                        }
+                    }
+                } else if (q.type === 'matrix' || q.type === 'matrix_custom') {
+                    if (userAns && typeof userAns === 'object') {
+                        let allCorrect = true;
+                        q.statements.forEach(st => {
+                            if (userAns[st.id] !== st.key) {
+                                allCorrect = false;
+                            }
+                        });
+                        if (allCorrect) {
+                            totalScore += pointsPerQuestion;
+                            correctCount++;
+                        }
+                    }
+                }
+            });
+
+            const finalScore = Math.round(totalScore);
+
+            // Hide Quiz Section and Show Result Section
+            quizSection.classList.add('hidden');
+            quizControls.classList.add('hidden');
+            resultSection.classList.remove('hidden');
+
+            // Render Score Summary
+            document.getElementById('score-display').innerText = finalScore;
+            document.getElementById('correct-count-display').innerText = `${correctCount}/${activeQuestions.length}`;
+
+            const isPassed = finalScore >= 80;
+            const statusDisplay = document.getElementById('target-status-display');
+            const statusIcon = document.getElementById('result-status-icon');
+            const statusTitle = document.getElementById('result-status-title');
+            const statusSubtitle = document.getElementById('result-status-subtitle');
+            const resultMsg = document.getElementById('result-message');
+            const btnViewCert = document.getElementById('btn-view-cert');
+
+            if (isPassed) {
+                statusDisplay.innerText = "LULUS TARGET";
+                statusDisplay.className = "text-sm font-bold mt-2.5 text-emerald-600";
+                statusIcon.className = "w-20 h-20 mx-auto rounded-full flex items-center justify-center text-3xl bg-emerald-100 text-emerald-600 shadow-inner";
+                statusIcon.innerHTML = `<i class="fa-solid fa-trophy"></i>`;
+                statusTitle.innerText = "Selamat! Anda Mencapai Target";
+                statusSubtitle.innerText = `Luar biasa, ${studentData.name}. Anda berhasil melampaui target KKM (80).`;
+                resultMsg.innerHTML = `Selamat! Anda berhak mendapatkan **Sertifikat Kelulusan Sementara**. Anda dapat mengunduh atau mencetak sertifikat Anda di bawah ini.`;
+                btnViewCert.classList.remove('hidden');
+
+                // Fill Certificate details
+                document.getElementById('cert-student-name').innerText = studentData.name.toUpperCase();
+                document.getElementById('cert-student-id').innerText = studentData.id;
+                document.getElementById('cert-score').innerText = finalScore;
+                document.getElementById('cert-date').innerText = `Tanggal: ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+            } else {
+                statusDisplay.innerText = "BELUM TARGET";
+                statusDisplay.className = "text-sm font-bold mt-2.5 text-red-600";
+                statusIcon.className = "w-20 h-20 mx-auto rounded-full flex items-center justify-center text-3xl bg-red-100 text-red-600 shadow-inner";
+                statusIcon.innerHTML = `<i class="fa-solid fa-rotate-left"></i>`;
+                statusTitle.innerText = "Belum Mencapai Target 80";
+                statusSubtitle.innerText = `Tetap semangat, ${studentData.name}! Jangan berkecil hati.`;
+                resultMsg.innerHTML = `Nilai Anda masih di bawah KKM target (80). Silakan melakukan latihan ulang dengan menekan tombol **Ulangi Ujian** di bawah.`;
+                btnViewCert.classList.add('hidden');
+            }
+
+            // Submit Data to Formspree
+            sendToFormspree({
+                nama_siswa: studentData.name,
+                nomor_absen: studentData.id,
+                nilai: finalScore,
+                jawaban_benar: `${correctCount}/${activeQuestions.length}`,
+                status: isPassed ? 'LULUS TARGET (>=80)' : 'BELUM TARGET (<80)',
+                waktu_pengerjaan: new Date().toLocaleString('id-ID')
+            });
+        }
+
+        function sendToFormspree(payload) {
+            const formspreeUrl = "https://formspree.io/f/myeklrnr";
+
+            fetch(formspreeUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+            }).then(response => {
+                if (response.ok) {
+                    console.log("Data hasil siswa berhasil terkirim ke Formspree!");
+                } else {
+                    console.warn("Gagal mengirim data ke Formspree.");
+                }
+            }).catch(error => {
+                console.error("Formspree connection error:", error);
+            });
+        }
+
+        document.getElementById('btn-retest').addEventListener('click', () => {
+            resultSection.classList.add('hidden');
+            document.getElementById('printable-certificate').classList.add('hidden');
+            identitySection.classList.remove('hidden');
+        });
+
+        document.getElementById('btn-view-cert').addEventListener('click', () => {
+            const certBox = document.getElementById('printable-certificate');
+            certBox.classList.remove('hidden');
+            certBox.scrollIntoView({ behavior: 'smooth' });
+            window.print();
+        });
+
+    </script>
+</body>
+</html>
